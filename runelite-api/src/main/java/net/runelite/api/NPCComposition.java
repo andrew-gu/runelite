@@ -98,4 +98,9 @@ public interface NPCComposition extends ParamHolder
 	 * @return
 	 */
 	boolean isFollower();
+
+	/**
+	 * Gets the displayed overhead icon of the NPC.
+	 */
+	HeadIcon getOverheadIcon();
 }

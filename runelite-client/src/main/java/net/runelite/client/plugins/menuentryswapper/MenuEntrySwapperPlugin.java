@@ -57,10 +57,7 @@ import net.runelite.api.NPC;
 import net.runelite.api.NPCComposition;
 import net.runelite.api.ObjectComposition;
 import net.runelite.api.ParamID;
-import net.runelite.api.events.ClientTick;
-import net.runelite.api.events.MenuOpened;
-import net.runelite.api.events.PostItemComposition;
-import net.runelite.api.events.PostMenuSort;
+import net.runelite.api.events.*;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
@@ -480,6 +477,11 @@ public class MenuEntrySwapperPlugin extends Plugin
 	}
 
 	@Subscribe
+	public void onAnimationChanged(AnimationChanged event) {
+		swap("attack", "pickpocket", () -> event.getActor().getAnimation() == 838);
+	}
+
+	@Subscribe
 	public void onMenuOpened(MenuOpened event)
 	{
 		configureObjectClick(event);
@@ -520,13 +522,6 @@ public class MenuEntrySwapperPlugin extends Plugin
 				{
 					if (Strings.isNullOrEmpty(actions[actionIdx]))
 					{
-						continue;
-					}
-
-					if ("Build".equals(actions[actionIdx])
-						|| "Remove".equals(actions[actionIdx]))
-					{
-						// https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1
 						continue;
 					}
 
@@ -732,12 +727,6 @@ public class MenuEntrySwapperPlugin extends Plugin
 						continue;
 					}
 
-					if ("Knock-Out".equals(actions[actionIdx])
-						|| "Lure".equals(actions[actionIdx]))
-					{
-						// https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1
-						continue;
-					}
 
 					final MenuAction menuAction = NPC_MENU_TYPES.get(actionIdx);
 					if (menuAction != currentAction)
